@@ -19,11 +19,12 @@
     <textarea id="prompt" placeholder="اكتب وصفاً دقيقاً للمشهد بالإنجليزية أو العربية (مثال: Cinematic shot of waves crashing)"></textarea>
     <button onclick="generateVideo()">بدء إنتاج الفيديو</button>
 
-    <div id="loader" class="loader">جاري معالجة الفيديو عبر Replicate... قد يستغرق الأمر دقيقة أو دقيقتين</div>
+    <div id="loader" class="loader">جاري معالجة الفيديو عبر السيرفر... قد يستغرق الأمر دقيقة أو دقيقتين</div>
     <video id="resultVideo" controls></video>
 </div>
 
 <script>
+    // هذا هو رابط الباك اند الخاص بك
     const BACKEND_URL = "https://visioncraft-backend.vercel.app";
 
     async function generateVideo() {
@@ -49,7 +50,8 @@
             
             pollResult(data.id);
         } catch (err) {
-            alert("حدث خطأ أثناء الاتصال بالسيرفر");
+            console.error(err);
+            alert("حدث خطأ أثناء الاتصال بالسيرفر. تأكد أن السيرفر يعمل.");
             document.getElementById('loader').style.display = 'none';
         }
     }
