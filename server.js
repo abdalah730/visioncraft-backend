@@ -6,17 +6,16 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// قراءة المفتاح من متغيرات البيئة في Vercel
 const replicate = new Replicate({
   auth: process.env.REPLICATE_API_TOKEN,
 });
 
-// مسار إرسال طلب توليد الفيديو
 app.post('/generate-video', async (req, res) => {
     const { prompt } = req.body;
     try {
         const prediction = await replicate.predictions.create({
-            version: "3d54d3d1d368297cb734b4c73499e710bf4b43b67eb49a888c3a91b4a3a60a7e",
+            model: "stability-ai/stable-video-diffusion",
+            version: "33984bc3faae0721e066ef95583387157565d73f1d86e80b1828ad4c09a8f73f",
             input: {
                 prompt: prompt,
                 fps: 6,
@@ -33,7 +32,6 @@ app.post('/generate-video', async (req, res) => {
     }
 });
 
-// مسار فحص حالة الفيديو حتى يكتمل تجهيزه
 app.get('/check-status/:id', async (req, res) => {
     try {
         const prediction = await replicate.predictions.get(req.params.id);
