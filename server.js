@@ -10,27 +10,27 @@ const replicate = new Replicate({
   auth: process.env.REPLICATE_API_TOKEN,
 });
 
+// مسار توليد الفيديو
 app.post('/generate-video', async (req, res) => {
     const { prompt } = req.body;
     try {
         const prediction = await replicate.predictions.create({
-            version: "9bb74cef8d3c1c49845348b6255d648c6f3938cf788f34b22c7a6e138a2e1d7f",
+            version: "97f2736262450516584283842630a104f44766060c230623d3a436575191c90c",
             input: {
+                input_image: null,
                 prompt: prompt,
-                fps: 6,
-                motion_bucket_id: 127
+                video_length: "14_frames_with_svd",
+                fps: 6
             }
         });
         
-        res.json({ 
-            id: prediction.id, 
-            status: prediction.status 
-        });
+        res.json({ id: prediction.id, status: prediction.status });
     } catch (error) {
-        res.status(500).json({ error: "فشل الاتصال بخدمة Replicate: " + error.message });
+        res.status(500).json({ error: "خطأ في الاتصال بـ Replicate: " + error.message });
     }
 });
 
+// مسار التحقق من حالة الفيديو
 app.get('/check-status/:id', async (req, res) => {
     try {
         const prediction = await replicate.predictions.get(req.params.id);
@@ -39,13 +39,13 @@ app.get('/check-status/:id', async (req, res) => {
         if (prediction.status === 'succeeded' && prediction.output) {
             outputUrl = Array.isArray(prediction.output) ? prediction.output[prediction.output.length - 1] : prediction.output;
         }
-
-        res.json({ 
-            status: prediction.status, 
-            output: outputUrl 
+        
+        res.json({
+            status: prediction.status,
+            output: outputUrl
         });
     } catch (e) {
-        res.status(500).json({ error: "خطأ في فحص حالة الفيديو" });
+        res.status(500).json({ error: "خطأ في فحص حالة الفيديو: " + e.message });
     }
 });
 
