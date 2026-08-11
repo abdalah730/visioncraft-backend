@@ -6,9 +6,9 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// تهيئة Replicate بالمفتاح الصحيح
+// تهيئة Replicate بالمفتاح الجديد
 const replicate = new Replicate({
-  auth: "r8_Ow1c6MVWEl02a6MKcFImc5L9UAnyWWF2BKQ6j",
+  auth: "r8_NhPangTzliQ2qnx1XSMXWHf5qSdch8FP3MT4WS",
 });
 
 // مسار إرسال طلب توليد الفيديو
