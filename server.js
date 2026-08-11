@@ -15,7 +15,6 @@ app.post('/generate-video', async (req, res) => {
     try {
         const prediction = await replicate.predictions.create({
             model: "stability-ai/stable-video-diffusion",
-            version: "33984bc3faae0721e066ef95583387157565d73f1d86e80b1828ad4c09a8f73f",
             input: {
                 prompt: prompt,
                 fps: 6,
