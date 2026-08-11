@@ -24,8 +24,8 @@
 </div>
 
 <script>
-    // تم جعل الرابط فارغاً ليعمل تلقائياً على نفس نطاق Vercel بدون أخطاء
-    const BACKEND_URL = "";
+    // تم ضبط الرابط بشكل صريح لضمان الاتصال المباشر بالسيرفر
+    const BACKEND_URL = "https://visioncraft-backend.vercel.app";
 
     async function generateVideo() {
         const prompt = document.getElementById('prompt').value;
@@ -34,7 +34,7 @@
         document.getElementById('loader').style.display = 'block';
 
         try {
-            // 1. إرسال الطلب إلى السيرفر المحلي على نفس النطاق
+            // 1. إرسال الطلب إلى السيرفر الآمن
             const response = await fetch(`${BACKEND_URL}/generate-video`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
