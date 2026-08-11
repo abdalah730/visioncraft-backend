@@ -6,9 +6,9 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// تهيئة Replicate بالمفتاح الجديد
+// قراءة المفتاح من متغيرات البيئة في Vercel
 const replicate = new Replicate({
-  auth: "r8_NhPangTzliQ2qnx1XSMXWHf5qSdch8FP3MT4WS",
+  auth: process.env.REPLICATE_API_TOKEN,
 });
 
 // مسار إرسال طلب توليد الفيديو
