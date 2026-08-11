@@ -8,8 +8,15 @@
   ],
   "routes": [
     {
+      "src": "/favicon.ico",
+      "status": 204,
+      "headers": {
+        "Cache-Control": "public, max-age=86400"
+      }
+    },
+    {
       "src": "/(.*)",
-      "destination": "server.js"
+      "dest": "server.js"
     }
   ]
 }
