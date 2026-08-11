@@ -7,7 +7,6 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// عرض صفحة الواجهة مباشرة عند فتح الموقع
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'index.html'));
 });
@@ -16,17 +15,16 @@ const replicate = new Replicate({
   auth: process.env.REPLICATE_API_TOKEN,
 });
 
-// مسار توليد الفيديو
 app.post('/generate-video', async (req, res) => {
     const { prompt } = req.body;
     try {
         const prediction = await replicate.predictions.create({
-            version: "33837648319f61b0d2d3cb535359dd347525287f3b609919f291e77030cb046a",
+            model: "lightricks/ltx-video",
             input: {
-                input_image: null,
                 prompt: prompt,
-                video_length: "14_frames_with_svd",
-                fps: 6
+                width: 768,
+                height: 512,
+                num_frames: 81
             }
         });
         
@@ -36,7 +34,6 @@ app.post('/generate-video', async (req, res) => {
     }
 });
 
-// مسار التحقق من حالة الفيديو
 app.get('/check-status/:id', async (req, res) => {
     try {
         const prediction = await replicate.predictions.get(req.params.id);
