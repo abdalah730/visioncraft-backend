@@ -6,6 +6,9 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// لجعل السيرفر يعرض صفحة الواجهة (HTML) عند فتح الموقع مباشرة
+app.use(express.static(__dirname));
+
 const replicate = new Replicate({
   auth: process.env.REPLICATE_API_TOKEN,
 });
